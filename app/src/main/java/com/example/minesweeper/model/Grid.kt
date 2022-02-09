@@ -7,7 +7,7 @@ class Grid(private val rows: Int, private val column: Int) {
 
     init {
         blocks = ArrayList<Block>()
-        for (i in 0 until rows * rows) {
+        for (i in 0 until rows * column) {
             blocks.add(Block(Block.BLANK))
         }
     }
@@ -16,14 +16,14 @@ class Grid(private val rows: Int, private val column: Int) {
         var bombsPlaced = 0
         while (bombsPlaced < totalBombs) {
             val x = Random().nextInt(rows)
-            val y = Random().nextInt(rows)
+            val y = Random().nextInt(column)
             if (blockAt(x, y)?.getValue() == Block.BLANK) {
                 blocks[x + y * rows] = Block(Block.BOMB)
                 bombsPlaced++
             }
         }
         for (x in 0 until rows) {
-            for (y in 0 until rows) {
+            for (y in 0 until column) {
                 if (blockAt(x, y)?.getValue() != Block.BOMB) {
                     val adjacentBlocks: List<Block> = adjacentBlocks(x, y)
                     var countBombs = 0
@@ -60,7 +60,7 @@ class Grid(private val rows: Int, private val column: Int) {
     }
 
     private fun blockAt(x: Int, y: Int): Block? {
-        return if (x < 0 || x >= rows || y < 0 || y >= rows) {
+        return if (x < 0 || x >= rows || y < 0 || y >= column) {
             null
         } else blocks[x + y * rows]
     }
@@ -70,13 +70,10 @@ class Grid(private val rows: Int, private val column: Int) {
         return blocks
     }
 
-    fun toIndex(x: Int, y: Int): Int {
-        return x + y * rows
-    }
 
     fun toXY(index: Int): IntArray {
-        val y = index / rows
-        val x = index - y * rows
+        val y: Int = index / rows
+        val x: Int = index - y * rows
         return intArrayOf(x, y)
     }
 

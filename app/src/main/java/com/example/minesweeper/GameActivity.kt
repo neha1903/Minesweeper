@@ -7,6 +7,9 @@ import android.os.CountDownTimer
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.minesweeper.MainActivity.Companion.column
+import com.example.minesweeper.MainActivity.Companion.mines
+import com.example.minesweeper.MainActivity.Companion.rows
 import com.example.minesweeper.adapters.GridRecyclerViewAdapter
 import com.example.minesweeper.databinding.ActivityGameBinding
 import com.example.minesweeper.interfaces.OnBlockClickListener
@@ -18,10 +21,8 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
 
     private lateinit var binding: ActivityGameBinding
 
-    private val TIMER_LENGTH = 999000L // 999 seconds in milliseconds
-    private val BOMB_COUNT = 10
-    private val GRID_ROW_SIZE = 10
-    private val GRID_COLUMN_SIZE = 10
+    private val timerLength = 999000L // 999 seconds in milliseconds
+
 
     private lateinit var countDownTimer: CountDownTimer
     private var secondsElapsed = 0
@@ -37,10 +38,14 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
         val view = binding.root
         setContentView(view)
 
+        val rows: Int = intent.getIntExtra(rows, 0)
+        val column: Int = intent.getIntExtra(column, 0)
+        val mines: Int = intent.getIntExtra(mines, 0)
+
 
         binding.apply {
-            gameGrid.layoutManager = GridLayoutManager(this@GameActivity, 10)
-            mineSweeperManager = MineSweeperManager(10, 10, 10)
+            gameGrid.layoutManager = GridLayoutManager(this@GameActivity, rows)
+            mineSweeperManager = MineSweeperManager(rows, column, mines)
 
             gridRecyclerViewAdapter =
                 GridRecyclerViewAdapter(
@@ -50,7 +55,7 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
             gameGrid.adapter = gridRecyclerViewAdapter
 
             timerStarted = false
-            countDownTimer = object : CountDownTimer(TIMER_LENGTH, 1000) {
+            countDownTimer = object : CountDownTimer(timerLength, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     secondsElapsed += 1
                     activityMainTimer.text = String.format("%03d", secondsElapsed)
@@ -60,7 +65,7 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
                     mineSweeperManager.outOfTime()
                     Toast.makeText(
                         applicationContext,
-                        "Game Over: Timer Expired",
+                        "Game Over: Timer Expired, Keep Trying!",
                         Toast.LENGTH_SHORT
                     ).show()
                     mineSweeperManager.getGrid().revealAllBombs()
@@ -77,7 +82,7 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
 
 
             activityMainSmiley.setOnClickListener {
-                mineSweeperManager = MineSweeperManager(GRID_ROW_SIZE, GRID_COLUMN_SIZE, BOMB_COUNT)
+                mineSweeperManager = MineSweeperManager(rows, column, mines)
                 gridRecyclerViewAdapter.setBlocks(mineSweeperManager.getGrid().getBlockList())
                 timerStarted = false
                 countDownTimer.cancel()

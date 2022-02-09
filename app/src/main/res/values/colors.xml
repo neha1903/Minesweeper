@@ -10,6 +10,7 @@
 
 
     <color name="sky_blue">#29bbff</color>
+    <color name="blue">#039BE5</color>
     <color name="red">#E53935</color>
     <color name="yellow">#FDD835</color>
     <color name="gray">#757575</color>
