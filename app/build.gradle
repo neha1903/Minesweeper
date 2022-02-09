@@ -30,6 +30,8 @@ android {
         jvmTarget = '1.8'
     }
 
+    /* To enable view binding in a module,
+    set the viewBinding build option to true in the module-level build.gradle */
     buildFeatures {
         viewBinding true
     }

@@ -9,7 +9,7 @@ import com.example.minesweeper.databinding.BlockItemBinding
 import com.example.minesweeper.interfaces.OnBlockClickListener
 import com.example.minesweeper.model.Block
 
-
+/*Grid Adapter for binding View of Item_block to the Grid recycler View */
 class GridRecyclerViewAdapter(
     private var blocks: List<Block>,
     private val onBlockClickListener: OnBlockClickListener
@@ -21,20 +21,24 @@ class GridRecyclerViewAdapter(
         return TileViewHolder(binding)
     }
 
+    /*On Bind view Holder*/
     override fun onBindViewHolder(holder: TileViewHolder, position: Int) {
         holder.bind(blocks[position])
         holder.setIsRecyclable(false)
     }
 
+    /*Returns the total Number of blocks*/
     override fun getItemCount(): Int {
         return blocks.size
     }
 
+    /*Set the List*/
     fun setBlocks(blocks: List<Block>) {
         this.blocks = blocks
         notifyDataSetChanged()
     }
 
+    /*Internal ViewHolder Class*/
     inner class TileViewHolder(private val blockItemBinding: BlockItemBinding) :
         RecyclerView.ViewHolder(blockItemBinding.root) {
         fun bind(block: Block) {

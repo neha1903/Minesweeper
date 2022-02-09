@@ -6,6 +6,7 @@ class Grid(private val rows: Int, private val column: Int) {
     private val blocks: MutableList<Block>
 
     init {
+        /*Initializes List of Block and adding Blocks when the Grid class is called*/
         blocks = ArrayList<Block>()
         for (i in 0 until rows * column) {
             blocks.add(Block(Block.BLANK))

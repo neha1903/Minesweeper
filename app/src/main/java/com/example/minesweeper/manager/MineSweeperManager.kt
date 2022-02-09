@@ -2,7 +2,7 @@ package com.example.minesweeper.manager
 
 import com.example.minesweeper.model.Block
 import com.example.minesweeper.model.Grid
-
+/*MineSweeper Manger*/
 class MineSweeperManager(
     private val rows: Int,
     private val column: Int,

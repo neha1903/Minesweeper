@@ -1,5 +1,6 @@
 package com.example.minesweeper.model
 
+/*Simple class for Each Block in the Grid*/
 class Block(private var value: Int) {
     var isRevealed = false
     var isFlagged = false
