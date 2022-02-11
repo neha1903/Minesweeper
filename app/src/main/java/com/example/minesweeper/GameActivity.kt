@@ -1,6 +1,7 @@
 package com.example.minesweeper
 
 
+import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -16,8 +17,14 @@ import com.example.minesweeper.interfaces.OnBlockClickListener
 import com.example.minesweeper.manager.MineSweeperManager
 import com.example.minesweeper.model.Block
 
+
 /*Game Board Activity implementing Interface OnBlockClickListener */
 class GameActivity : AppCompatActivity(), OnBlockClickListener {
+
+    companion object {
+        const val BEST_GAME_TIME = "BEST_TIME"
+        const val LAST_GAME_TIME = "LAST_GAME_TIME"
+    }
 
     /* Variable Declaration and Initialization Region Start */
     private lateinit var binding: ActivityGameBinding
@@ -70,7 +77,7 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
             countDownTimer = object : CountDownTimer(timerLength, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     secondsElapsed += 1
-                    activityMainTimer.text = String.format("%03d", secondsElapsed)
+                    activityGameTimer.text = String.format("%03d", secondsElapsed)
                 }
 
                 override fun onFinish() {
@@ -97,8 +104,9 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
                 gridRecyclerViewAdapter.setBlocks(mineSweeperManager.getGrid().getBlockList())
                 timerStarted = false
                 countDownTimer.cancel()
+                updateTime()
                 secondsElapsed = 0
-                activityMainTimer.setText(R.string.default_count)
+                activityGameTimer.setText(R.string.default_count)
                 activityMainFlagsLeft.text = String.format(
                     "%03d",
                     mineSweeperManager.getNumberBombs() - mineSweeperManager.flagCount
@@ -140,11 +148,13 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
             }
             if (mineSweeperManager.isGameOver) {
                 countDownTimer.cancel()
+                updateTime()
                 Toast.makeText(applicationContext, "Game Over", Toast.LENGTH_SHORT).show()
                 mineSweeperManager.getGrid().revealAllBombs()
             }
             if (mineSweeperManager.isGameWon) {
                 countDownTimer.cancel()
+                updateTime()
                 Toast.makeText(applicationContext, "Game Won", Toast.LENGTH_SHORT).show()
                 mineSweeperManager.getGrid().revealAllBombs()
             }
@@ -154,5 +164,20 @@ class GameActivity : AppCompatActivity(), OnBlockClickListener {
     }
     /*Definition of BlockClick Function Region Start*/
 
+
+    private fun updateTime() {
+        val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+        val bestTime = sharedPreferences.getInt(BEST_GAME_TIME, 0)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        val currentTime = Integer.parseInt(binding.activityGameTimer.text.toString())
+        if (mineSweeperManager.isGameWon && bestTime < currentTime) {
+            editor.putInt(
+                BEST_GAME_TIME,
+                Integer.parseInt(binding.activityGameTimer.text.toString())
+            )
+        }
+        editor.putInt(LAST_GAME_TIME, Integer.parseInt(binding.activityGameTimer.text.toString()))
+        editor.apply()
+    }
 
 }

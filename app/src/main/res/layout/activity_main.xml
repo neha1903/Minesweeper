@@ -71,11 +71,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="@string/start"
+            android:textColor="#212121"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextNumberOfMines"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="TextContrastCheck" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -133,6 +135,7 @@
             android:layout_marginTop="20dp"
             android:importantForAutofill="no"
             android:text="@string/make_a_custom_board"
+            android:textColor="#212121"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"

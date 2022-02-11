@@ -37,7 +37,7 @@
             android:textSize="64sp" />
 
         <TextView
-            android:id="@+id/activity_main_timer"
+            android:id="@+id/activity_game_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

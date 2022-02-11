@@ -5,7 +5,9 @@
     <string name="bomb">💣</string>
     <string name="default_count">000</string>
     <string name="best_time_15s">Best Time: 15s</string>
+    <string name="best_time">Best Time: %ds</string>
     <string name="last_game_time_40s">Last Game Time: 40s</string>
+    <string name="last_game_time">Last Game Time %ds</string>
     <string name="select_difficulty">Select Difficulty</string>
     <string name="start">Start</string>
     <string name="difficult">Difficult</string>

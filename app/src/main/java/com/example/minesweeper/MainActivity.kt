@@ -85,6 +85,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateTime() {
+        /*Shared pref is used for saving key-value
+        * can be store private Mode*/
+        // instance of Shared preference is created in private mode
+        val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+        val bestTime = sharedPreferences.getInt(GameActivity.BEST_GAME_TIME, 0)
+        val lastGameTime = sharedPreferences.getInt(GameActivity.LAST_GAME_TIME, 0)
+        binding.bestTimeTextview.text = getString(R.string.best_time, bestTime)
+        binding.lastGmeTimeTextview.text = getString(R.string.last_game_time, lastGameTime)
+    }
 
     private fun setOnCustomBoardClickListener() {
         // using Instance of the ActivityMainBinding class for calling any of the views in XML
@@ -154,7 +164,7 @@ class MainActivity : AppCompatActivity() {
             if (rows.isEmpty() && column.isEmpty() && mines.isEmpty()) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Please Enter Rows, Column and Mines greater or equal to 6 ",
+                    "Please Enter Rows, Column and Mines greater or equal to 3 ",
                     Toast.LENGTH_SHORT
                 ).show()
                 return
@@ -163,10 +173,10 @@ class MainActivity : AppCompatActivity() {
                 numberOfColumn = Integer.parseInt(column)
                 numberOfMines = Integer.parseInt(mines)
 
-                if (numberOfRows < 6 || numberOfColumn < 6 || numberOfMines < 6) {
+                if (numberOfRows < 3 || numberOfColumn < 3 || numberOfMines < 3) {
                     Toast.makeText(
                         this@MainActivity,
-                        "Please Enter Rows, Column and Mines greater or equal to 6 ",
+                        "Please Enter Rows, Column and Mines greater or equal to 3 ",
                         Toast.LENGTH_SHORT
                     ).show()
                     return
@@ -184,5 +194,14 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(intent) // start the Activity by passing the intent in startActivity()
         /*Ending Game Activity IntentRegion*/
+    }
+
+    /*Update Time is called onResume() because when we came back
+    * from GameActivity to MainAActivity onResume is called and Time will update.
+    * */
+    override fun onResume() {
+        super.onResume()
+        /*Update Time is called here*/
+        updateTime()
     }
 }
