@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.minesweeper.databinding.ActivityMainBinding
+
 /*Main Activity is Application Launcher Activity*/
 class MainActivity : AppCompatActivity() {
     /* Companion objects are singleton objects whose properties and
@@ -83,6 +84,11 @@ class MainActivity : AppCompatActivity() {
                 // Setting Custom Game Start Button
                 setOnStartGameClick()
             }
+
+            info.setOnClickListener {
+                showInstructions()
+            }
+
         }
     }
 
@@ -224,7 +230,7 @@ class MainActivity : AppCompatActivity() {
 
         builder.setPositiveButton(
             "OK"
-        ) { dialog, which ->
+        ) { _, _ ->
 
         }
 
