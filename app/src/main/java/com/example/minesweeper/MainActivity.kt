@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.minesweeper.databinding.ActivityMainBinding
 /*Main Activity is Application Launcher Activity*/
@@ -203,5 +204,31 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         /*Update Time is called here*/
         updateTime()
+    }
+
+    private fun showInstructions() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        builder.setTitle("INSTRUCTIONS")
+        builder.setMessage(
+            "The purpose of the game is to open all the cells of the board which do not contain a bomb. You lose if you set off a bomb cell.\n" +
+                    "\n" +
+                    "Every non-bomb cell you open will tell you the total number of bombs in the eight neighboring cells. Once you are sure that a cell contains a bomb, you can right-click to put a flag it on it as a reminder. Once you have flagged all the bombs around an open cell, you can quickly open the remaining non-bomb cells by shift-clicking on the cell.\n" +
+                    "\n" +
+                    "To start a new game (abandoning the current one), just click on the yellow face button.\n" +
+                    "\n" +
+                    "Happy Gaming!"
+        )
+
+        builder.setCancelable(false)
+
+        builder.setPositiveButton(
+            "OK"
+        ) { dialog, which ->
+
+        }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 }

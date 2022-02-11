@@ -18,4 +18,5 @@
     <string name="enter_the_number_of_rows">Enter the Number of Rows</string>
     <string name="enter_the_number_of_columns">Enter the Number of Columns</string>
     <string name="enter_the_number_of_mines">Enter the Number of Mines</string>
+    <string name="rules">ℹ️</string>
 </resources>
