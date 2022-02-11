@@ -214,7 +214,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showInstructions() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-
         builder.setTitle("INSTRUCTIONS")
         builder.setMessage(
             "The purpose of the game is to open all the cells of the board which do not contain a bomb. You lose if you set off a bomb cell.\n" +
@@ -227,13 +226,10 @@ class MainActivity : AppCompatActivity() {
         )
 
         builder.setCancelable(false)
-
         builder.setPositiveButton(
             "OK"
         ) { _, _ ->
-
         }
-
         val alertDialog = builder.create()
         alertDialog.show()
     }
